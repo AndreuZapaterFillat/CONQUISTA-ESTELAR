@@ -33,13 +33,9 @@ public class CICP {
 		//Obtener el nombre de las ciudades vecinas
 		devolverVecinas(ciudadVecina, total, val);
 		
-		
-		System.out.println(nombreCiudad);
-		System.out.println(coordenadas[0]);
-		System.out.println(coordenadas[1]);
-		System.out.println(coordenadas[2]);
-		System.out.println(ciudadVecina);
-		
+		//Mostramos el objetivo de Silco
+		mostrarInformacion(ciudadVecina, val, nombreCiudad, coordenadas);
+
 	}
 	
 	//************************************************************************************
@@ -105,5 +101,31 @@ public class CICP {
 			
 		}
 	}
+	
+	
+	//************************************************************************************
+	//** Nombre de la función: mostrarInformacion
+	//** Explicación del que hace la función: Muestra la información guardada
+	//** Parámetros de entrada: ArrayList<String> ciudadVecina, int [] val, String nombreCiudad, int [] coordenadas
+	//** Parámetros de salida:
+	//************************************************************************************	
+	public static void mostrarInformacion(ArrayList<String> ciudadVecina, int [] val, String nombreCiudad, int [] coordenadas) {
+		
+		System.out.printf("\nSilco actúa en %s con los números %d, %d y %d, y cuyas ciudads colindantes son "
+				 ,nombreCiudad, coordenadas[0], coordenadas[1], coordenadas[2]);
+
+		for(val[0] = 0; val[0] < ciudadVecina.size(); val[0]++) {
+			if(val[0] + 1 == ciudadVecina.size()) {
+				System.out.println(" y " + ciudadVecina.get(val[0]));
+			}else {
+				System.out.print(ciudadVecina.get(val[0]));
+				if(val[0] != ciudadVecina.size() - 2)
+					System.out.print(", ");
+			}
+	
+		}
+	}
+	
+	
 
 }
