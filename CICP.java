@@ -111,7 +111,7 @@ public class CICP {
 	//************************************************************************************	
 	public static void mostrarInformacion(ArrayList<String> ciudadVecina, int [] val, String nombreCiudad, int [] coordenadas) {
 		
-		System.out.printf("\nSilco actúa en %s con los números %d, %d y %d, y cuyas ciudads colindantes son "
+		System.out.printf("\nSilco actúa en %s con los números %d, %d y %d, y cuyas ciudades colindantes son "
 				 ,nombreCiudad, coordenadas[0], coordenadas[1], coordenadas[2]);
 
 		for(val[0] = 0; val[0] < ciudadVecina.size(); val[0]++) {
