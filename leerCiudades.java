@@ -1,139 +1,119 @@
+//Autors: Alejandro Rodríguez i Andreu Zapater
 package Pandemic;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.lang.Math;
 
 public class leerCiudades {
 
 	public static void main(String[] args) {
-		
 		File NomFit = new File("ciudades.txt");
-		File NomFit2 = new File("ciudades.txt");
-		File ciudadesRed = new File("ciudadesRedactadas.txt");
-		int i = 0;
-		String texto = "";
+	    File ciudadesRed = new File("ciudadesRedactadas.txt");
+	    int i = 0;
+	    int j = 0;
+	    String texto = "";
+	    double resultado;
 
-		
-		String nombreCiudad = "";
-		String nombreVecina = "";
-		int [] coordenadas = new int [3];
-		int [] coordenadasVecina = new int[3];
-		ArrayList<String> ciudadVecina = new ArrayList<String>();
-		
-		int [] val = new int [1];
-		
-		//leerFichero(NomFit);
-		
-		
+	    String nombreCiudad = "";
+	    String nombreVecina = "";
+	    int [] coordenadas = new int [3];
+	    int [] coordenadasVecina = new int[3];
+	    ArrayList<String> ciudadVecina = new ArrayList<String>();
+
+	    int [] val = new int [1];
+
 		try {
 			FileReader fr = new FileReader(NomFit);
-			BufferedReader br = new BufferedReader(fr);
-			//Miramos si el fichero tiene información
-			if(NomFit.length() != 0) {
-				do {
-					texto = br.readLine();
-					if(texto != null) {
-						FileWriter fw = new FileWriter(ciudadesRed,false);
-						BufferedWriter bw = new BufferedWriter(fw);
-						
-						//Obtener el nombre de la ciudad
-						nombreCiudad = devolverCiudad(texto, val);
-						
-						//Número 1
-						coordenadas[0] = Integer.valueOf(devolverCoordenada(texto, val));
-						//Número 2
-						coordenadas[1] = Integer.valueOf(devolverCoordenada(texto, val));
-						//Número 3
-						coordenadas[2] = Integer.valueOf(devolverCoordenada(texto, val));
-						
-						//Obtener el nombre de las ciudades vecinas
-						devolverVecinas(ciudadVecina, texto, val);
+	        BufferedReader br = new BufferedReader(fr);
+	        
+	        FileWriter fw = new FileWriter(ciudadesRed,false);
+	        BufferedWriter bw = new BufferedWriter(fw);
+			
+			do {
+				val[0] = 0;
+				texto = br.readLine();
+				//System.out.println(texto);
+				if(texto != null) {
+					//Obtener el nombre de la ciudad
+                    nombreCiudad = devolverCiudad(texto, val);
 
-						texto = "La ciudad " +nombreCiudad+ " está en las coordenadas (" +coordenadas[1]+ "," +coordenadas[2]+ ") sus ciudades colindantes son:";
-						System.out.println(ciudadVecina);
-						for(i = 0; i < ciudadVecina.size(); i++) {
-							System.out.println(ciudadVecina.get(i));
-						}
-						bw.write(texto);
-						bw.newLine();
-						val[0] = 0;
-						try {
-							FileReader fr2 = new FileReader(NomFit2);
-							BufferedReader br2 = new BufferedReader(fr);
-							if(NomFit2.length() != 0) {
-								System.out.println("hola1");
-								val[0] = 0;
-								do {
-									System.out.println("hola2");
-									texto = br2.readLine();
-									System.out.println(texto);
-									nombreVecina = devolverCiudad(texto, val);
-									System.out.println("hola5");
-									for(i = 0; i < ciudadVecina.size(); i++) {
-										System.out.println("hola3");
-										if(nombreVecina.equals(ciudadVecina.get(i))) {
-											System.out.println("hola4");
-											//Número 1
-											coordenadasVecina[0] = Integer.valueOf(devolverCoordenada(texto, val));
-											//Número 2
-											coordenadasVecina[1] = Integer.valueOf(devolverCoordenada(texto, val));
-											//Número 3
-											coordenadasVecina[2] = Integer.valueOf(devolverCoordenada(texto, val));
-											
-											texto = "\t- " +nombreVecina+ ", que está a una distancia de " + (Math.sqrt(Math.pow(coordenadasVecina[1], coordenadas[1]) + Math.pow(coordenadasVecina[2], coordenadas[2])) );
-											bw.write(texto);
-											bw.newLine();
-										}
-										
-										
-									}
-									val[0] = 0;
-									fr2.close();
-									br2.close();
-								}while(texto != null);
-								
-							}else {
-								System.out.println("El fichero está vacío");
-							}
-							
-						} catch (Exception e) {
-							System.out.println("Error try vecino: " + e);
-						}
-						
-						
-						bw.close();
-						fw.close();
-						val[0] = 0;
-					}
-				}while(texto != null);
-			fr.close();
-			br.close();
-			}else {
-				System.out.println("El fichero está vacío");
-			}
-				
-			fr.close();
-			br.close();
-		} catch (IOException e) {
+                    //Número 1
+                    coordenadas[0] = Integer.valueOf(devolverCoordenada(texto, val));
+                    //Número 2
+                    coordenadas[1] = Integer.valueOf(devolverCoordenada(texto, val));
+                    //Número 3
+                    coordenadas[2] = Integer.valueOf(devolverCoordenada(texto, val));
+
+                    //System.out.println("coordenadas: " + coordenadas[0] + " " + coordenadas[1] + " " +coordenadas[2]);
+                    
+                    //Obtener el nombre de las ciudades vecinas
+                    devolverVecinas(ciudadVecina, texto, val);
+
+                    texto = "La ciudad " +nombreCiudad+ " está en las coordenadas (" +coordenadas[1]+ "," +coordenadas[2]+ ") sus ciudades colindantes son:";
+
+                    bw.write(texto);
+                    bw.newLine();
+                    val[0] = 0;
+                    
+                    try {
+                        FileReader fr2 = new FileReader(NomFit);
+                        BufferedReader br2 = new BufferedReader(fr2);
+                        if (NomFit.length() != 0) {
+                            val[0] = 0;
+                            do {
+                                texto = br2.readLine();
+                                if (texto != null) {
+                                    nombreVecina = devolverCiudad(texto, val);
+                                    for (i = 0; i < ciudadVecina.size(); i++) {
+                                        if (nombreVecina.equals(ciudadVecina.get(i))) {
+                                            //Número 1
+                                            coordenadasVecina[0] = Integer.valueOf(devolverCoordenada(texto, val));
+                                            //Número 2
+                                            coordenadasVecina[1] = Integer.valueOf(devolverCoordenada(texto, val));
+                                            //Número 3
+                                            coordenadasVecina[2] = Integer.valueOf(devolverCoordenada(texto, val));
+                                            resultado = (Math.sqrt(  ((coordenadasVecina[1] - coordenadas[1])*(coordenadasVecina[1] - coordenadas[1])) + ((coordenadasVecina[2] - coordenadas[2])*(coordenadasVecina[2] - coordenadas[2]))  ) );
+                                            resultado =  Math.floor(resultado * 100) / 100;;
+
+                                            texto = "\t- " +nombreVecina+ ", que está a una distancia de " + resultado;
+                                            bw.write(texto);
+                                            bw.newLine();
+                                        }
+                                    }
+                                }
+                            } while (texto != null);
+                            bw.newLine();
+                            fr2.close();
+                            br2.close();
+                        } else {
+                            System.out.println("El fichero está vacío");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error try vecino: " + e);
+                    }
+                    
+                    ciudadVecina.removeAll(ciudadVecina);
+
+                    val[0] = 0;
+                    j++;
+				}
+			}while(j != 48);
+			
+			bw.close();
+            fw.close();
+            br.close();
+	        fr.close();
+			
+		}catch (IOException e) {
 			System.out.println("Error E/S: " + e);
 		}
-			
-			
-		leerFichero(ciudadesRed);	
-			
-			
-		
-
+		System.out.println();
+		leerFichero(ciudadesRed);
 	}
 	
-
+	
+	
 	//************************************************************************************
 	//** Nombre de la función: devolverCiudad
 	//** Explicación del que hace la función: Devuelve el nombre de la ciudad
@@ -230,8 +210,4 @@ public class leerCiudades {
 		}
 	
 	
-
-
-
-
 }
