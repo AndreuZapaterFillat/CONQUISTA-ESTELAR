@@ -23,6 +23,7 @@ public class leerCiudades {
 
 	    int [] val = new int [1];
 
+	    //Leemos el fichero ciudades y escribimos en el fichero ciudadesRedactadas
 		try {
 			FileReader fr = new FileReader(NomFit);
 	        BufferedReader br = new BufferedReader(fr);
@@ -30,7 +31,9 @@ public class leerCiudades {
 	        FileWriter fw = new FileWriter(ciudadesRed,false);
 	        BufferedWriter bw = new BufferedWriter(fw);
 			
+	        //Leemos todas las líneas de ciudades
 			do {
+				//Ponemos val igual a 0 para usarlo en las funciones de obtener la información de las líneas
 				val[0] = 0;
 				texto = br.readLine();
 				//System.out.println(texto);
@@ -45,8 +48,6 @@ public class leerCiudades {
                     //Número 3
                     coordenadas[2] = Integer.valueOf(devolverCoordenada(texto, val));
 
-                    //System.out.println("coordenadas: " + coordenadas[0] + " " + coordenadas[1] + " " +coordenadas[2]);
-                    
                     //Obtener el nombre de las ciudades vecinas
                     devolverVecinas(ciudadVecina, texto, val);
 
@@ -56,6 +57,7 @@ public class leerCiudades {
                     bw.newLine();
                     val[0] = 0;
                     
+                    //Abrimos otro fileReades para buscar la información de las ciudades colindantes
                     try {
                         FileReader fr2 = new FileReader(NomFit);
                         BufferedReader br2 = new BufferedReader(fr2);
@@ -64,8 +66,10 @@ public class leerCiudades {
                             do {
                                 texto = br2.readLine();
                                 if (texto != null) {
+                                	//Obtenemos el nombre de la ciudad
                                     nombreVecina = devolverCiudad(texto, val);
                                     for (i = 0; i < ciudadVecina.size(); i++) {
+                                    	//Miramos si es alguna de las ciudades colindantes
                                         if (nombreVecina.equals(ciudadVecina.get(i))) {
                                             //Número 1
                                             coordenadasVecina[0] = Integer.valueOf(devolverCoordenada(texto, val));
