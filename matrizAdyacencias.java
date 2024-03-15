@@ -3,6 +3,7 @@ package Pandemic;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.lang.Math;
 
 public class matrizAdyacencias {
@@ -12,7 +13,9 @@ public class matrizAdyacencias {
 	    int i = 0;
 	    int j = 0;
 	    int z = 0;
+	    int indicePlan = 0;
 	    String texto = "";
+	    String planeta = "";
 	    double resultado;
 	    
 	    double [][] Matriz = new double [48][48];
@@ -24,7 +27,11 @@ public class matrizAdyacencias {
 	    ArrayList<String> ciudadVecina = new ArrayList<String>();
 
 	    int [] val = new int [1];
-
+	    Scanner entrada = new Scanner(System.in);
+	    
+	    System.out.print("Introduce un planeta: ");
+	    planeta = entrada.nextLine();
+	    entrada.close();
 	    //Leemos el fichero ciudades y escribimos en el fichero ciudadesRedactadas
 		try {
 			FileReader fr = new FileReader(NomFit);
@@ -40,7 +47,12 @@ public class matrizAdyacencias {
 				if(texto != null) {
 					//Obtener el nombre de la ciudad
                     nombreCiudad = devolverCiudad(texto, val);
+                    
+                    if(planeta.equalsIgnoreCase(nombreCiudad))	
+                    	indicePlan = j;
 
+                    	
+                    
                     //Número 1
                     coordenadas[0] = Integer.valueOf(devolverCoordenada(texto, val));
                     //Número 2
@@ -75,7 +87,7 @@ public class matrizAdyacencias {
                                             //Número 3
                                             coordenadasVecina[2] = Integer.valueOf(devolverCoordenada(texto, val));
                                             resultado = (Math.sqrt(  ((coordenadasVecina[1] - coordenadas[1])*(coordenadasVecina[1] - coordenadas[1])) + ((coordenadasVecina[2] - coordenadas[2])*(coordenadasVecina[2] - coordenadas[2]))  ) );
-                                            resultado =  Math.floor(resultado * 100) / 100;;
+                                            resultado =  Math.floor(resultado * 100) / 100;
 
                                             Matriz[j][z] = resultado;
 
@@ -108,13 +120,12 @@ public class matrizAdyacencias {
 			System.out.println("Error E/S: " + e);
 		}
 		System.out.println();
-		
-		/*for(i = 0; i < 48; i++) {
-			for(j = 0; j < 48; j++) {
-				System.out.print(Matriz[i][j] + " ");
-			}
-			System.out.println();
-		}*/
+	
+		//System.out.println(indicePlan);
+	    ShortestPath t = new ShortestPath();
+	 
+	    // Function call
+	    t.dijkstra(Matriz, indicePlan);
 		
 	}
 	
@@ -214,6 +225,7 @@ public class matrizAdyacencias {
 				System.out.println("Error E/S: " + e);
 			}
 		}
+
 
 
 }
