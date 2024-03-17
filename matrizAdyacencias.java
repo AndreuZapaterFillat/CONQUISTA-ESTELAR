@@ -88,7 +88,8 @@ public class matrizAdyacencias {
                                             coordenadasVecina[2] = Integer.valueOf(devolverCoordenada(texto, val));
                                             resultado = (Math.sqrt(  ((coordenadasVecina[1] - coordenadas[1])*(coordenadasVecina[1] - coordenadas[1])) + ((coordenadasVecina[2] - coordenadas[2])*(coordenadasVecina[2] - coordenadas[2]))  ) );
                                             resultado =  Math.floor(resultado * 100) / 100;
-
+                                            
+                                            //Ponemos la distancia en la matriz
                                             Matriz[j][z] = resultado;
 
                                         }
@@ -124,7 +125,7 @@ public class matrizAdyacencias {
 		//System.out.println(indicePlan);
 	    ShortestPath t = new ShortestPath();
 	 
-	    // Function call
+	    //Llamamos al función que calcula la ruta óptima
 	    t.dijkstra(Matriz, indicePlan);
 		
 	}
