@@ -1,4 +1,4 @@
-package menu;
+package Menu;
 
 //Video de referencia: https://www.youtube.com/watch?v=gBtuj_MjgtY
 
@@ -89,7 +89,7 @@ public class login extends JFrame implements ActionListener{
 		getContentPane().add(password);
 		
 		JLabel lblNewLabel = new JLabel("Fondo");
-		lblNewLabel.setIcon(new ImageIcon("E:\\ARODRIGUEZ\\Prog\\Pandemic\\learning_the_force_ll.jpg"));
+		lblNewLabel.setIcon(new ImageIcon("/Users/alejandrorodriguezvallin/Desktop/Ilerna/Prog/Pandemic/src/Menu/learning_the_force_ll.jpeg"));
 		lblNewLabel.setBounds(0, -18, 1352, 579);
 		getContentPane().add(lblNewLabel);
 		this.setVisible(true);
@@ -99,14 +99,15 @@ public class login extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
 		
-		Connection con = bbdd.conectarBaseDatos();
-		//Declaración de Arrays de Strings que se usan en las funciones de bbdd
-		String[] listaElementosSeleccionados = new String[5];
-		String[] Select = new String[20];
-		String usuario = "";
-		String contra = "";
-		int reply;
+		
 		if(evt.getSource() == btn) {
+			Connection con = bbdd.conectarBaseDatos();
+			//Declaración de Arrays de Strings que se usan en las funciones de bbdd
+			String[] listaElementosSeleccionados = new String[5];
+			String[] Select = new String[20];
+			String usuario = "";
+			String contra = "";
+			int reply;
 			String userText = username.getText();
 			String pwdText = new String(password.getPassword());
 			
@@ -133,7 +134,7 @@ public class login extends JFrame implements ActionListener{
 				
 				if (reply == JOptionPane.YES_OPTION) {
 					bbdd.insert(con, "INSERT INTO LOGIN_PANDEMIC (usuario,contra) VALUES ('" + usuario + "','"+ contra + "')");
-				    JOptionPane.showMessageDialog(null, "Creado con éxito\nIniciando Conquista Estelar");
+				    JOptionPane.showMessageDialog(null, "Creado con éxito.\nIniciando Conquista Estelar");
 				    setVisible(false);
 				    dispose();
 				}
