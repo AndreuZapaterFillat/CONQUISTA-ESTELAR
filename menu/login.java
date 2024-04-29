@@ -101,7 +101,7 @@ public class login extends JFrame implements ActionListener{
 		
 		
 		if(evt.getSource() == btn) {
-			Connection con = bbdd.conectarBaseDatos();
+			
 			//Declaración de Arrays de Strings que se usan en las funciones de bbdd
 			String[] listaElementosSeleccionados = new String[5];
 			String[] Select = new String[20];
@@ -117,29 +117,44 @@ public class login extends JFrame implements ActionListener{
 			usuario = userText;
 			contra = pwdText;
 		
-			
-			Select = bbdd.select(con, "SELECT COUNT(*) FROM LOGIN_PANDEMIC WHERE USUARIO = '" + usuario + "' AND CONTRA = '" + contra +"'", listaElementosSeleccionados);
-			message.setText("Conectando al servidor...");
-			
-			if(Select[0].charAt(0) != '0') {
-				JOptionPane.showMessageDialog(null, "Credenciales correctos.\nIniciando Conquista Estelar");
-				 setVisible(false);
-				 dispose();
-			}else {
-				 reply = JOptionPane.showConfirmDialog(null,
-			            "El usuario no existe en la base de datos. ¿Quiéres crear un usuario con los datos proporcionados?",
-			            "Confirmar creación de usuario",
-			            JOptionPane.YES_NO_OPTION);
-				
-				
-				if (reply == JOptionPane.YES_OPTION) {
-					bbdd.insert(con, "INSERT INTO LOGIN_PANDEMIC (usuario,contra) VALUES ('" + usuario + "','"+ contra + "')");
-				    JOptionPane.showMessageDialog(null, "Creado con éxito.\nIniciando Conquista Estelar");
-				    setVisible(false);
-				    dispose();
+			if(usuario.contentEquals("") || contra.contentEquals("")) {
+				if(usuario.contentEquals("") && contra.contentEquals("")) {
+					JOptionPane.showMessageDialog(null, "Los campos de usuario y contraseña no pueden estar vacíos");
+				}else if(usuario.contentEquals("")) {
+					JOptionPane.showMessageDialog(null, "El campo de usuario no puede estar vacío");
+				}else {
+					JOptionPane.showMessageDialog(null, "El campo de contraseña no puede estar vacío");
 				}
+			}else {
+				message.setText("Conectando al servidor...");
+				Connection con = bbdd.conectarBaseDatos();
+				Select = bbdd.select(con, "SELECT COUNT(*) FROM LOGIN_PANDEMIC WHERE USUARIO = '" + usuario + "' AND CONTRA = '" + contra +"'", listaElementosSeleccionados);
 				
+				
+				if(Select[0].charAt(0) != '0') {
+					JOptionPane.showMessageDialog(null, "Credenciales correctos.\nIniciando Conquista Estelar");
+					 setVisible(false);
+					 dispose();
+				}else {
+					 reply = JOptionPane.showConfirmDialog(null,
+				            "El usuario no existe en la base de datos. ¿Quiéres crear un usuario con los datos proporcionados?",
+				            "Confirmar creación de usuario",
+				            JOptionPane.YES_NO_OPTION);
+					
+					
+					if (reply == JOptionPane.YES_OPTION) {
+						bbdd.insert(con, "INSERT INTO LOGIN_PANDEMIC (usuario,contra) VALUES ('" + usuario + "','"+ contra + "')");
+					    JOptionPane.showMessageDialog(null, "Creado con éxito.\nIniciando Conquista Estelar");
+					    setVisible(false);
+					    dispose();
+					}else {
+						message.setText("");
+					}
+					
+				}
 			}
+			
+			
 			
 		}
 		
